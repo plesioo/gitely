@@ -3,6 +3,20 @@ import { Command } from "@cliffy/command";
 const install = new Command()
   .description("Start tracking your git activities.")
   .action(async () => {
+    console.log("Installing Gitely tracking...");
+    const gitDir = ".git";
+
+    const cmd = new Deno.Command("git", {
+      args: ["rev-parse", "--is-inside-work-tree"],
+    });
+    const result = await cmd.output();
+    const isGitRepo = result.success;
+
+    if (!isGitRepo) {
+      console.error("❌ This command must be run inside a git repository.");
+      Deno.exit(1);
+    }
+
     const hookPath = ".git/hooks/post-commit";
 
     const hookContent = `#!/bin/sh
