@@ -24,6 +24,9 @@ const install = new Command()
     deno run --allow-read --allow-write --allow-env /Users/phillipfleischer/Documents/gitely/main.ts track
     `;
 
+    const hooksDir = `${gitDir}/hooks`;
+    await Deno.mkdir(hooksDir, { recursive: true });
+
     try {
       await Deno.writeTextFile(hookPath, hookContent);
       await Deno.chmod(hookPath, 0o755);
