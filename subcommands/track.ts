@@ -1,7 +1,10 @@
 import { Command } from "@cliffy/command";
 
 const track = new Command().action(async () => {
-  const sessionXp = getRandomInt(20, 50);
+  const MIN_XP = 20;
+  const MAX_XP = 50;
+
+  const sessionXp = getRandomIntRoundedDownToNearest5(MIN_XP, MAX_XP);
 
   const isXpFileExisting = await Deno.stat("level.json").then(
     () => true,
@@ -38,12 +41,19 @@ const track = new Command().action(async () => {
   console.log(`You earned ${sessionXp} XP!`);
 });
 
-function getRandomInt(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandomIntRoundedDownToNearest5(min: number, max: number): number {
+  const num = Math.floor(Math.random() * (max - min + 1) + min);
+  return roundDownToNearest5(num);
 }
 
 function getRequiredXpForLevelup(level: number): number {
-  return Math.floor(45 * Math.pow(level, 1.01));
+  const num = Math.floor(45 * Math.pow(level, 1.01));
+  return roundDownToNearest5(num);
+}
+
+function roundDownToNearest5(num: number): number {
+  const rest = num % 5;
+  return num - rest;
 }
 
 track.hidden();
