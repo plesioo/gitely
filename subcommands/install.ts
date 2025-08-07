@@ -22,7 +22,7 @@ const install = new Command()
 
     const hookContent = `#!/bin/sh
     # Gitely post-commit hook
-    deno run --allow-read --allow-write --allow-env /Users/phillipfleischer/Documents/gitely/main.ts track
+    deno run --allow-run --allow-read --allow-write --allow-env /Users/phillipfleischer/Documents/gitely/main.ts track
     `;
 
     const hooksDir = `${gitDir}/hooks`;
@@ -33,6 +33,19 @@ const install = new Command()
       await Deno.chmod(hookPath, 0o755);
     } catch (error) {
       console.error("❌ Failed to install hook:", error);
+    }
+
+    const stateFile = "level.json";
+    const initialState = {
+      xp: 0,
+      level: 1,
+    };
+
+    try {
+      await Deno.writeTextFile(stateFile, JSON.stringify(initialState));
+    } catch (error) {
+      console.error("❌ Failed to create state file:", error);
+      Deno.exit(1);
     }
 
     console.log("✅ Gitely tracking successfully installed.");
