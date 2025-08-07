@@ -9,9 +9,10 @@ const install = new Command()
     const cmd = new Deno.Command("git", {
       args: ["rev-parse", "--is-inside-work-tree"],
     });
-    const result = await cmd.output();
-    const isGitRepo = result.success;
 
+    const result = await cmd.output();
+
+    const isGitRepo = result.success;
     if (!isGitRepo) {
       console.error("❌ This command must be run inside a git repository.");
       Deno.exit(1);
