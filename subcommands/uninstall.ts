@@ -8,11 +8,13 @@ const uninstall = new Command()
     const gitDir = ".git";
     const hookPath = `${gitDir}/hooks/post-commit`;
 
-    await Deno.remove(hookPath);
-    // TODO: add proper error handling
-    await Deno.remove("level.json");
-
-    console.log("✅ Gitely tracking successfully uninstalled.");
+    try {
+      await Deno.remove(hookPath);
+      await Deno.remove("level.json");
+      console.log("✅ Gitely tracking successfully uninstalled.");
+    } catch (error) {
+      console.error("❌ Failed to uninstall Gitely tracking:", error);
+    }
   });
 
 export default uninstall;
