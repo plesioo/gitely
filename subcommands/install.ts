@@ -35,8 +35,7 @@ const install = new Command()
         set -e
 
         # Gitely post-commit hook
-        repo_root="$(git rev-parse --show-toplevel)"
-        exec deno run --allow-run --allow-read --allow-write --allow-env "$repo_root/main.ts" track
+        "$(which gitely)" track
         `;
 
     if (!hookExists) {
