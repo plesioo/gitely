@@ -22,7 +22,6 @@ Options:
   -h, --help            Show this help
 
 Environment variables:
-  GITHUB_TOKEN          Optional, avoids GitHub API rate limits
   BINARY_NAME, REPO, INSTALL_DIR, VERSION, INCLUDE_PRERELEASE can override defaults
 EOF
 }
@@ -67,12 +66,10 @@ esac
 
 # Build GitHub API URL
 API_BASE="https://api.github.com/repos/$REPO/releases"
-AUTH_HEADER=()
-[[ -n "${GITHUB_TOKEN:-}" ]] && AUTH_HEADER=(-H "Authorization: Bearer $GITHUB_TOKEN")
 
 fetch_json() {
-  local url="$1"
-  curl -fsSL "${AUTH_HEADER[@]}" "$url"
+    local url="$1"
+    curl -fsSL "$url"
 }
 
 # Resolve release JSON
@@ -143,7 +140,7 @@ trap 'rm -rf "$tmpdir"' EXIT
 
 filename="$tmpdir/$(basename "$match_url")"
 echo "Downloading: $match_url"
-curl -fL "${AUTH_HEADER[@]}" -o "$filename" "$match_url"
+curl -fL -o "$filename" "$match_url"
 
 # If archive, extract; otherwise assume it is the binary
 case "$filename" in
