@@ -4,9 +4,10 @@ import track from "./subcommands/track.ts";
 import status from "./subcommands/status.ts";
 
 import { Command } from "@cliffy/command";
+import { APP_NAME } from "./config.ts";
 
 new Command()
-  .name("gitely")
+  .name(APP_NAME)
   .version("1.0.0")
   .description("A CLI tool for tracking git activities.")
   .command("install", install)

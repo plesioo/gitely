@@ -1,4 +1,5 @@
 import { Command } from "@cliffy/command";
+import { STATE_FILE_PATH } from "../config.ts";
 
 interface State {
   xp: number;
@@ -7,14 +8,13 @@ interface State {
 }
 
 const track = new Command().action(async () => {
-  const stateFile = "level.json";
-  const state: State = getState(stateFile);
+  const state: State = getState(STATE_FILE_PATH);
   const currentHash = await getCurrentHash();
 
   if (state.lastCommit) {
     const isAncestor = await IsCommitAncestor(state.lastCommit, currentHash);
     if (!isAncestor) {
-      await handleGitReset(state, currentHash, stateFile);
+      await handleGitReset(state, currentHash, STATE_FILE_PATH);
       return;
     }
   }
@@ -26,16 +26,16 @@ const track = new Command().action(async () => {
     level: newLevel,
     lastCommit: currentHash,
   };
-  await updateState(stateFile, newState);
+  await updateState(STATE_FILE_PATH, newState);
 
   console.log(
     `You earned ${sessionXp} XP! Total XP: ${newXp}, Level: ${newLevel}`,
   );
 });
 
-function getState(stateFile: string): State {
+function getState(stateFilePath: string): State {
   try {
-    return JSON.parse(Deno.readTextFileSync(stateFile));
+    return JSON.parse(Deno.readTextFileSync(stateFilePath));
   } catch (err) {
     if (err instanceof Deno.errors.NotFound) {
       return { xp: 0, level: 1 };

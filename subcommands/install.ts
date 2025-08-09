@@ -1,23 +1,19 @@
 import { Command } from "@cliffy/command";
 import { fileExists } from "../utils/deno.ts";
+import { APP_NAME, HOOK_PATH, HOOKS_DIR, STATE_FILE_PATH } from "../config.ts";
 
 const install = new Command()
   .description("Start tracking your git activities.")
   .action(async () => {
-    const gitDir = ".git";
-    const hooksDir = `${gitDir}/hooks`;
-    const hookPath = `${hooksDir}/post-commit`;
-    const stateFile = "level.json";
-
-    const hookExists = await fileExists(hookPath);
-    const stateFileExists = await fileExists(stateFile);
+    const hookExists = await fileExists(HOOK_PATH);
+    const stateFileExists = await fileExists(STATE_FILE_PATH);
 
     if (hookExists && stateFileExists) {
-      console.log("Gitely is already installed.");
+      console.log(`${APP_NAME} is already installed.`);
       return;
     }
 
-    console.log("Installing Gitely tracking...");
+    console.log(`Installing ${APP_NAME} tracking...`);
 
     const cmd = new Deno.Command("git", {
       args: ["rev-parse", "--is-inside-work-tree"],
@@ -34,16 +30,16 @@ const install = new Command()
     const hookContent = `#!/usr/bin/env sh
         set -e
 
-        # Gitely post-commit hook
-        "$(which gitely)" track
+        # ${APP_NAME} post-commit hook
+        "$(which ${APP_NAME})" track
         `;
 
     if (!hookExists) {
-      await Deno.mkdir(hooksDir, { recursive: true });
+      await Deno.mkdir(HOOKS_DIR, { recursive: true });
 
       try {
-        await Deno.writeTextFile(hookPath, hookContent);
-        await Deno.chmod(hookPath, 0o755);
+        await Deno.writeTextFile(HOOK_PATH, hookContent);
+        await Deno.chmod(HOOK_PATH, 0o755);
       } catch (error) {
         console.error("❌ Failed to install hook:", error);
       }
@@ -56,14 +52,14 @@ const install = new Command()
       };
 
       try {
-        await Deno.writeTextFile(stateFile, JSON.stringify(initialState));
+        await Deno.writeTextFile(STATE_FILE_PATH, JSON.stringify(initialState));
       } catch (error) {
         console.error("❌ Failed to create state file:", error);
         Deno.exit(1);
       }
     }
 
-    console.log("✅ Gitely tracking successfully installed.");
+    console.log(`✅ ${APP_NAME} tracking successfully installed.`);
   });
 
 export default install;

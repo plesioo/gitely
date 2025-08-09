@@ -1,19 +1,17 @@
 import { Command } from "@cliffy/command";
+import { APP_NAME, HOOK_PATH, STATE_FILE_PATH } from "../config.ts";
 
 const uninstall = new Command()
   .description("Stop tracking your git activities.")
   .action(async () => {
-    console.log("Uninstalling Gitely tracking...");
-
-    const gitDir = ".git";
-    const hookPath = `${gitDir}/hooks/post-commit`;
+    console.log(`Uninstalling ${APP_NAME} tracking...`);
 
     try {
-      await Deno.remove(hookPath);
-      await Deno.remove("level.json");
-      console.log("✅ Gitely tracking successfully uninstalled.");
+      await Deno.remove(HOOK_PATH);
+      await Deno.remove(STATE_FILE_PATH);
+      console.log(`✅ ${APP_NAME} tracking successfully uninstalled.`);
     } catch (error) {
-      console.error("❌ Failed to uninstall Gitely tracking:", error);
+      console.error(`❌ Failed to uninstall ${APP_NAME} tracking:`, error);
     }
   });
 
