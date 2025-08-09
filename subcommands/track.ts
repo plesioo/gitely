@@ -8,7 +8,7 @@ interface State {
 }
 
 const track = new Command().action(async () => {
-  const state: State = getState(STATE_FILE_PATH);
+  const state: State = await getState(STATE_FILE_PATH);
   const currentHash = await getCurrentHash();
 
   if (state.lastCommit) {
@@ -33,9 +33,9 @@ const track = new Command().action(async () => {
   );
 });
 
-function getState(stateFilePath: string): State {
+async function getState(stateFilePath: string): Promise<State> {
   try {
-    return JSON.parse(Deno.readTextFileSync(stateFilePath));
+    return JSON.parse(await Deno.readTextFile(stateFilePath));
   } catch (err) {
     if (err instanceof Deno.errors.NotFound) {
       return { xp: 0, level: 1 };
