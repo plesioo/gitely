@@ -8,7 +8,7 @@ import { APP_NAME } from "./config.ts";
 
 new Command()
   .name(APP_NAME)
-  .version("1.0.0")
+  .version("0.0.1-alpha")
   .description("A CLI tool for tracking git activities.")
   .command("install", install)
   .command("uninstall", uninstall)
