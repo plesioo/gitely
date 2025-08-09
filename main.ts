@@ -14,4 +14,7 @@ new Command()
   .command("uninstall", uninstall)
   .command("track", track)
   .command("status", status)
+  .action(function () {
+    this.showHelp();
+  })
   .parse(Deno.args);
