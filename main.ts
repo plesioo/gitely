@@ -1,7 +1,7 @@
 import install from "./subcommands/install.ts";
 import uninstall from "./subcommands/uninstall.ts";
 import track from "./subcommands/track.ts";
-import status from "./subcommands/status.ts";
+import status from "./subcommands/stats.ts";
 
 import { Command } from "@cliffy/command";
 import { APP_NAME } from "./config.ts";
