@@ -9,8 +9,6 @@ code. Soon, you'll also be rewarded for daily streaks and other Git activities
 
 ## Requirements
 
-Currently, only Windows is supported.
-
 To start using `gitely`, a local Git repository is required.
 
 ## Installation
@@ -29,9 +27,9 @@ $ gitely install
 
 This creates a Git hook that will run `gitely` every time you make a commit.
 
-After each commit made through the terminal, your earned XP and any potential level-up
-will be displayed. If you're using third-party Git tools (like GitHub Desktop),
-this output won't appear.
+After each commit made through the terminal, your earned XP and any potential
+level-up will be displayed. If you're using third-party Git tools (like GitHub
+Desktop), this output won't appear.
 
 Nevertheless, to view your current stats, use:
 
