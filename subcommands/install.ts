@@ -1,5 +1,6 @@
 import { Command } from "@cliffy/command";
 import { fileExists } from "../utils/deno.ts";
+import { dirname } from "https://deno.land/std/path/mod.ts";
 import { APP_NAME, HOOK_PATH, HOOKS_DIR, STATE_FILE_PATH } from "../config.ts";
 
 const install = new Command()
@@ -52,6 +53,9 @@ const install = new Command()
       };
 
       try {
+        await Deno.mkdir(dirname(STATE_FILE_PATH), {
+          recursive: true,
+        });
         await Deno.writeTextFile(STATE_FILE_PATH, JSON.stringify(initialState));
       } catch (error) {
         console.error("❌ Failed to create state file:", error);
