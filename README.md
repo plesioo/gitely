@@ -40,5 +40,5 @@ gitely status
 To remove `gitely` from your Git repository, run:
 
 ```sh
-$ gitely uninstall
+gitely uninstall
 ```
