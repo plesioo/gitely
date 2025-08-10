@@ -40,7 +40,10 @@ const install = new Command()
 
       try {
         await Deno.writeTextFile(HOOK_PATH, hookContent);
-        await Deno.chmod(HOOK_PATH, 0o755);
+
+        if (Deno.build.os !== "windows") {
+          await Deno.chmod(HOOK_PATH, 0o755);
+        }
       } catch (error) {
         console.error("❌ Failed to install hook:", error);
       }
