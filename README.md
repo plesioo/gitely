@@ -14,7 +14,7 @@ To start using `gitely`, a local Git repository is required.
 ## Installation
 
 ```sh
-$ curl -fsSL https://raw.githubusercontent.com/plesioo/gitely/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/plesioo/gitely/main/install.sh | bash
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ $ curl -fsSL https://raw.githubusercontent.com/plesioo/gitely/main/install.sh | 
 Navigate to your Git repository and run:
 
 ```sh
-$ gitely install
+gitely install
 ```
 
 This creates a Git hook that will run `gitely` every time you make a commit.
@@ -34,7 +34,7 @@ Desktop), this output won't appear.
 Nevertheless, to view your current stats, use:
 
 ```sh
-$ gitely status
+gitely status
 ```
 
 To remove `gitely` from your Git repository, run:
