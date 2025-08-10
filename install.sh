@@ -4,7 +4,7 @@ set -e
 
 # Customize this for your binary
 BINARY_NAME="gitely"
-VERSION="v0.0.0-alpha"
+VERSION="v0.1.0-alpha"
 REPO="plesioo/gitely"
 INSTALL_DIR="/usr/local/bin"
 
